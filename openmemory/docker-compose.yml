@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   mem0_store:
     image: qdrant/qdrant
@@ -5,9 +7,9 @@ services:
       - "6333:6333"
     volumes:
       - mem0_storage:/mem0/storage
+
   openmemory-mcp:
-    image: mem0/openmemory-mcp
-    build: api/
+    image: mem0/openmemory-mcp:latest
     environment:
       - USER
       - API_KEY
@@ -21,6 +23,7 @@ services:
       - ./api:/usr/src/openmemory
     command: >
       sh -c "uvicorn main:app --host 0.0.0.0 --port 8765 --reload --workers 4"
+
   openmemory-ui:
     build:
       context: ui/
